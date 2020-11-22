@@ -1,8 +1,9 @@
-FROM ubuntu:18.04
-LABEL version="1.0" description="webserver ubuntu nodeJS"
-RUN apt update -y && apt upgrade -y
-RUN apt install nodejs -y && apt install npm -y && apt install git -y
+FROM node:15.2.1-alpine3.10
+LABEL version="1.0" description="webserver nodejs"
+RUN apk update && apk upgrade
+RUN apk add bash && apk add git
 RUN mkdir felipe && cd felipe && git clone https://github.com/felipefranca93/simple-chat.git
-RUN cd felipe/simple-chat/ && npm install
-EXPOSE 3000
-
+WORKDIR /felipe/simple-chat/
+RUN npm install 
+CMD ["node", "server.js"]
+EXPOSE 3000/tcp
